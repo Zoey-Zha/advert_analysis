@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.zoey</groupId>
+  <artifactId>advert_analysis</artifactId>
+  <version>1.0-SNAPSHOT</version>
+  <inceptionYear>2008</inceptionYear>
+
+    <properties>
+      <maven.compiler.source>1.8</maven.compiler.source>
+      <maven.compiler.target>1.8</maven.compiler.target>
+      <encoding>UTF-8</encoding>
+      <scala.tools.version>2.11</scala.tools.version>
+      <scala.version>2.11.8</scala.version>
+      <spark.version>2.4.3</spark.version>
+      <!--<hadoop.version>2.6.0-cdh5.15.1</hadoop.version>-->
+    </properties>
+
+  <repositories>
+    <!--引入CDH的仓库,VW的项目没有引入-->
+    <!--有的包找不到。。。-->
+    <!--<repository>-->
+    <!--  <id>cloudera</id>-->
+    <!--  <url>https://repository.cloudera.com/artifactory/cloudera-repos</url>-->
+    <!--</repository>-->
+
+    <repository>
+      <id>scala-tools.org</id>
+      <name>Scala-Tools Maven2 Repository</name>
+      <url>http://scala-tools.org/repo-releases</url>
+    </repository>
+  </repositories>
+
+  <pluginRepositories>
+    <!--<pluginRepository>-->
+    <!--  <id>maven2</id>-->
+    <!--  <url>https://repo.maven.apache.org/maven2/</url>-->
+    <!--</pluginRepository>-->
+
+    <!--<pluginRepository>-->
+    <!--  <id>scala-tools.org</id>-->
+    <!--  <name>Scala-Tools Maven2 Repository</name>-->
+    <!--  <url>http://scala-tools.org/repo-releases</url>-->
+    <!--</pluginRepository>-->
+  </pluginRepositories>
+
+  <dependencies>
+
+    <!--Spark SQL依赖-->
+    <dependency>
+      <groupId>org.apache.spark</groupId>
+      <artifactId>spark-sql_2.11</artifactId>
+      <version>${spark.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.spark</groupId>
+      <artifactId>spark-hive_2.11</artifactId>
+      <version>${spark.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.spark</groupId>
+      <artifactId>spark-hive-thriftserver_2.11</artifactId>
+      <version>${spark.version}</version>
+    </dependency>
+
+    <!-- Hadoop相关依赖-->
+    <!--Could not find artifact org.apache.hadoop:hadoop-client:pom:2.6.0-cdh5.15.1 in scala-tools.org (http://scala-tools.org/repo-releases)
+-->
+    <!--<dependency>-->
+    <!--  <groupId>org.apache.hadoop</groupId>-->
+    <!--  <artifactId>hadoop-client</artifactId>-->
+    <!--  <version>${hadoop.version}</version>-->
+    <!--</dependency>-->
+
+    <dependency>
+      <groupId>mysql</groupId>
+      <artifactId>mysql-connector-java</artifactId>
+      <version>5.1.47</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.typesafe</groupId>
+      <artifactId>config</artifactId>
+      <version>1.3.3</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.hive</groupId>
+      <artifactId>hive-jdbc</artifactId>
+      <version>1.2.1</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.kudu</groupId>
+      <artifactId>kudu-client</artifactId>
+      <version>1.7.0</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.kudu</groupId>
+      <artifactId>kudu-spark2_2.11</artifactId>
+      <version>1.7.0</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.scala-lang</groupId>
+      <artifactId>scala-library</artifactId>
+      <version>${scala.version}</version>
+    </dependency>
+
+    <!-- Test -->
+    <!--<dependency>-->
+    <!--  <groupId>junit</groupId>-->
+    <!--  <artifactId>junit</artifactId>-->
+    <!--  <version>4.11</version>-->
+    <!--  <scope>test</scope>-->
+    <!--</dependency>-->
+
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter</artifactId>
+      <version>5.5.2</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.junit.platform</groupId>
+      <artifactId>junit-platform-runner</artifactId>
+      <version>1.5.2</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.junit.vintage</groupId>
+      <artifactId>junit-vintage-engine</artifactId>
+      <version>5.5.2</version>
+      <scope>test</scope>
+    </dependency>
+
+
+    <dependency>
+      <groupId>org.specs</groupId>
+      <artifactId>specs</artifactId>
+      <version>1.2.5</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <sourceDirectory>src/main/scala</sourceDirectory>
+    <testSourceDirectory>src/test/scala</testSourceDirectory>
+    <plugins>
+      <plugin>
+        <groupId>net.alchim31.maven</groupId>
+        <artifactId>scala-maven-plugin</artifactId>
+        <!--<version>4.0.0</version>-->
+        <executions>
+          <execution>
+            <goals>
+              <goal>compile</goal>
+              <goal>testCompile</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <scalaVersion>${scala.version}</scalaVersion>
+          <args>
+            <arg>-target:jvm-1.5</arg>
+          </args>
+        </configuration>
+      </plugin>
+
+      <!--retired-->
+      <!--<plugin>-->
+      <!--  <groupId>org.apache.maven.plugins</groupId>-->
+      <!--  <artifactId>maven-eclipse-plugin</artifactId>-->
+      <!--  <configuration>-->
+      <!--    <downloadSources>true</downloadSources>-->
+      <!--    <buildcommands>-->
+      <!--      <buildcommand>ch.epfl.lamp.sdt.core.scalabuilder</buildcommand>-->
+      <!--    </buildcommands>-->
+      <!--    <additionalProjectnatures>-->
+      <!--      <projectnature>ch.epfl.lamp.sdt.core.scalanature</projectnature>-->
+      <!--    </additionalProjectnatures>-->
+      <!--    <classpathContainers>-->
+      <!--      <classpathContainer>org.eclipse.jdt.launching.JRE_CONTAINER</classpathContainer>-->
+      <!--      <classpathContainer>ch.epfl.lamp.sdt.launching.SCALA_CONTAINER</classpathContainer>-->
+      <!--    </classpathContainers>-->
+      <!--  </configuration>-->
+      <!--</plugin>-->
+    </plugins>
+  </build>
+  <reporting>
+    <plugins>
+      <plugin>
+        <!--<groupId>org.scala-tools</groupId>-->
+        <!--<artifactId>maven-scala-plugin</artifactId>-->
+        <groupId>net.alchim31.maven</groupId>
+        <artifactId>scala-maven-plugin</artifactId>
+        <configuration>
+          <scalaVersion>${scala.version}</scalaVersion>
+        </configuration>
+      </plugin>
+
+      <!--copy from the codes-->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>2.13</version>
+        <configuration>
+          <useFile>false</useFile>
+          <disableXmlReport>true</disableXmlReport>
+          <!-- If you have classpath issue like NoDefClassError,... -->
+          <!-- useManifestOnlyJar>false</useManifestOnlyJar -->
+          <includes>
+            <include>**/*Test.*</include>
+            <include>**/*Suite.*</include>
+          </includes>
+        </configuration>
+      </plugin>
+
+    </plugins>
+  </reporting>
+</project>
