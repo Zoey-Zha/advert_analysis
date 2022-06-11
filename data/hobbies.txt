@@ -1,0 +1,2 @@
+alice	jogging,codinng,cooking
+lina	travel,dance

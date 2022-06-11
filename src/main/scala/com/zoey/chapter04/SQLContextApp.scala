@@ -12,7 +12,7 @@ object SQLContextApp {
 
     val sc1 = new SQLContext(sc)
 
-    val df = sc1.read.text("file:///Users/xinzha/Documents/02 Projects/advert_analysis/data/people.txt")
+    val df = sc1.read.text("file:///Users/xinzha/Documents/02 Projects/advert_analysis/data/input.txt")
 
     // df.printSchema()
     df.show(false)
