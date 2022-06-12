@@ -12,6 +12,9 @@ object UDFApp {
 
     import spark.implicits._
 
+    //test map
+    val testRDD: RDD[Array[String]] = hobbyRDD.map(_.split("\t"))
+
     val hobbyDF: DataFrame = hobbyRDD.map(_.split("\t")).map(x => Hobby(x(0), x(1))).toDF()
 
     // hobbyDF.show(false)
