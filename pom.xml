@@ -94,16 +94,30 @@
       <version>1.2.1</version>
     </dependency>
 
-    <dependency>
-      <groupId>org.apache.kudu</groupId>
-      <artifactId>kudu-client</artifactId>
-      <version>1.7.0</version>
-    </dependency>
+    <!--<dependency>-->
+    <!--  <groupId>org.apache.kudu</groupId>-->
+    <!--  <artifactId>kudu-client</artifactId>-->
+    <!--  <version>1.7.0</version>-->
+    <!--</dependency>-->
 
+    <!--<dependency>-->
+    <!--  <groupId>org.apache.kudu</groupId>-->
+    <!--  <artifactId>kudu-spark2_2.11</artifactId>-->
+    <!--  <version>1.7.0</version>-->
+    <!--</dependency>-->
+
+    <!-- https://mvnrepository.com/artifact/org.apache.kudu/kudu-spark2 -->
     <dependency>
       <groupId>org.apache.kudu</groupId>
       <artifactId>kudu-spark2_2.11</artifactId>
-      <version>1.7.0</version>
+      <version>1.4.0</version>
+    </dependency>
+
+
+    <dependency>
+      <groupId>org.apache.kudu</groupId>
+      <artifactId>kudu-client</artifactId>
+      <version>1.4.0</version>
     </dependency>
 
     <dependency>
@@ -152,25 +166,25 @@
     <sourceDirectory>src/main/scala</sourceDirectory>
     <testSourceDirectory>src/test/scala</testSourceDirectory>
     <plugins>
-      <plugin>
-        <groupId>net.alchim31.maven</groupId>
-        <artifactId>scala-maven-plugin</artifactId>
-        <!--<version>4.0.0</version>-->
-        <executions>
-          <execution>
-            <goals>
-              <goal>compile</goal>
-              <goal>testCompile</goal>
-            </goals>
-          </execution>
-        </executions>
-        <configuration>
-          <scalaVersion>${scala.version}</scalaVersion>
-          <args>
-            <arg>-target:jvm-1.5</arg>
-          </args>
-        </configuration>
-      </plugin>
+      <!--<plugin>-->
+      <!--  <groupId>net.alchim31.maven</groupId>-->
+      <!--  <artifactId>scala-maven-plugin</artifactId>-->
+      <!--  &lt;!&ndash;<version>4.0.0</version>&ndash;&gt;-->
+      <!--  <executions>-->
+      <!--    <execution>-->
+      <!--      <goals>-->
+      <!--        <goal>compile</goal>-->
+      <!--        <goal>testCompile</goal>-->
+      <!--      </goals>-->
+      <!--    </execution>-->
+      <!--  </executions>-->
+      <!--  <configuration>-->
+      <!--    <scalaVersion>${scala.version}</scalaVersion>-->
+      <!--    <args>-->
+      <!--      <arg>-target:jvm-1.5</arg>-->
+      <!--    </args>-->
+      <!--  </configuration>-->
+      <!--</plugin>-->
 
       <!--retired-->
       <!--<plugin>-->
@@ -194,15 +208,15 @@
   </build>
   <reporting>
     <plugins>
-      <plugin>
-        <!--<groupId>org.scala-tools</groupId>-->
-        <!--<artifactId>maven-scala-plugin</artifactId>-->
-        <groupId>net.alchim31.maven</groupId>
-        <artifactId>scala-maven-plugin</artifactId>
-        <configuration>
-          <scalaVersion>${scala.version}</scalaVersion>
-        </configuration>
-      </plugin>
+      <!--<plugin>-->
+      <!--  &lt;!&ndash;<groupId>org.scala-tools</groupId>&ndash;&gt;-->
+      <!--  &lt;!&ndash;<artifactId>maven-scala-plugin</artifactId>&ndash;&gt;-->
+      <!--  <groupId>net.alchim31.maven</groupId>-->
+      <!--  <artifactId>scala-maven-plugin</artifactId>-->
+      <!--  <configuration>-->
+      <!--    <scalaVersion>${scala.version}</scalaVersion>-->
+      <!--  </configuration>-->
+      <!--</plugin>-->
 
       <!--copy from the codes-->
       <plugin>
