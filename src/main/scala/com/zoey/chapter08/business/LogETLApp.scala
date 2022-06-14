@@ -1,8 +1,6 @@
-package com.zoey.chapter08
+package com.zoey.chapter08.business
 
 import com.zoey.Utils.{IPUtils, KuduUtil, SQLUtil, SchemaUtil}
-import org.apache.kudu.client.{CreateTableOptions, KuduClient}
-import org.apache.kudu.client.KuduClient.KuduClientBuilder
 import org.apache.spark.rdd.RDD
 import org.apache.spark.sql.expressions.UserDefinedFunction
 import org.apache.spark.sql.functions.udf
@@ -46,7 +44,7 @@ object LogETLApp {
 
     // val newJsonDF = jsonDF.withColumn("ipLong",iPUtil('ip)).select('ipLong)
     // add new column by withColumn
-    val newJsonDF = jsonDF.withColumn("ip_long",getLongIp('ip))
+    val newJsonDF = jsonDF.withColumn("ip_long", getLongIp('ip))
 
     newJsonDF.createOrReplaceTempView("logs")
     ipRuleDF.createOrReplaceTempView("ips")
@@ -74,7 +72,7 @@ object LogETLApp {
 
     resDF.write.mode(SaveMode.Append) //
       .format("org.apache.kudu.spark.kudu") //
-      .option("kudu.table",tableName)
+      .option("kudu.table", tableName)
       .option("kudu.master", master)
       .save()
 

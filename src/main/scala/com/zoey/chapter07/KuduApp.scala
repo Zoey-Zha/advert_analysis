@@ -23,6 +23,7 @@ object KuduApp {
 
     // 删除表
     deleteTable(client, "ods")
+    deleteTable(client,"province_city_stat")
 
     // 插入数据
     //  inseartRows(client, tableName)

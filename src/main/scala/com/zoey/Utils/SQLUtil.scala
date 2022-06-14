@@ -47,4 +47,63 @@ object SQLUtil {
       |group by 1, 2
       |order by cnt desc
       |""".stripMargin
+
+
+  lazy val AREA_SQL_STEP1 = "select provincename,cityname, " +
+    "sum(case when requestmode=1 and processnode >=1 then 1 else 0 end) origin_request," +
+    "sum(case when requestmode=1 and processnode >=2 then 1 else 0 end) valid_request," +
+    "sum(case when requestmode=1 and processnode =3 then 1 else 0 end) ad_request," +
+    "sum(case when adplatformproviderid>=100000 and iseffective=1 and isbilling=1 and isbid=1 and adorderid!=0 then 1 else 0 end) bid_cnt," +
+    "sum(case when adplatformproviderid>=100000 and iseffective=1 and isbilling=1 and iswin=1 then 1 else 0 end) bid_success_cnt," +
+    "sum(case when requestmode=2 and iseffective=1 then 1 else 0 end) ad_display_cnt," +
+    "sum(case when requestmode=3 and processnode=1 then 1 else 0 end) ad_click_cnt," +
+    "sum(case when requestmode=2 and iseffective=1 and isbilling=1 then 1 else 0 end) medium_display_cnt," +
+    "sum(case when requestmode=3 and iseffective=1 and isbilling=1 then 1 else 0 end) medium_click_cnt," +
+    "sum(case when adplatformproviderid>=100000 and iseffective=1 and isbilling=1 and iswin=1 and adorderid>20000  then 1*winprice/1000 else 0 end) ad_consumption," +
+    "sum(case when adplatformproviderid>=100000 and iseffective=1 and isbilling=1 and iswin=1 and adorderid>20000  then 1*adpayment/1000 else 0 end) ad_cost " +
+    "from ods group by provincename,cityname"
+
+  lazy val AREA_SQL_STEP2 = "select provincename,cityname, " +
+    "origin_request," +
+    "valid_request," +
+    "ad_request," +
+    "bid_cnt," +
+    "bid_success_cnt," +
+    "round(bid_success_cnt/bid_cnt,2) bid_success_rate," +
+    "ad_display_cnt," +
+    "ad_click_cnt," +
+    "round(ad_click_cnt/ad_display_cnt,2) ad_click_rate," +
+    "ad_consumption," +
+    "ad_cost from area_tmp " +
+    "where bid_cnt!=0 and ad_display_cnt!=0"
+
+
+  lazy val APP_SQL_STEP1 = "select appid,appname, " +
+    "sum(case when requestmode=1 and processnode >=1 then 1 else 0 end) origin_request," +
+    "sum(case when requestmode=1 and processnode >=2 then 1 else 0 end) valid_request," +
+    "sum(case when requestmode=1 and processnode =3 then 1 else 0 end) ad_request," +
+    "sum(case when adplatformproviderid>=100000 and iseffective=1 and isbilling=1 and isbid=1 and adorderid!=0 then 1 else 0 end) bid_cnt," +
+    "sum(case when adplatformproviderid>=100000 and iseffective=1 and isbilling=1 and iswin=1 then 1 else 0 end) bid_success_cnt," +
+    "sum(case when requestmode=2 and iseffective=1 then 1 else 0 end) ad_display_cnt," +
+    "sum(case when requestmode=3 and processnode=1 then 1 else 0 end) ad_click_cnt," +
+    "sum(case when requestmode=2 and iseffective=1 and isbilling=1 then 1 else 0 end) medium_display_cnt," +
+    "sum(case when requestmode=3 and iseffective=1 and isbilling=1 then 1 else 0 end) medium_click_cnt," +
+    "sum(case when adplatformproviderid>=100000 and iseffective=1 and isbilling=1 and iswin=1 and adorderid>20000  then 1*winprice/1000 else 0 end) ad_consumption," +
+    "sum(case when adplatformproviderid>=100000 and iseffective=1 and isbilling=1 and iswin=1 and adorderid>20000  then 1*adpayment/1000 else 0 end) ad_cost " +
+    "from ods group by appid,appname"
+
+
+  lazy val APP_SQL_STEP2 = "select appid,appname, " +
+    "origin_request," +
+    "valid_request," +
+    "ad_request," +
+    "bid_cnt," +
+    "bid_success_cnt," +
+    "bid_success_cnt/bid_cnt bid_success_rate," +
+    "ad_display_cnt," +
+    "ad_click_cnt," +
+    "ad_click_cnt/ad_display_cnt ad_click_rate," +
+    "ad_consumption," +
+    "ad_cost from app_tmp " +
+    "where bid_cnt!=0 and ad_display_cnt!=0"
 }
