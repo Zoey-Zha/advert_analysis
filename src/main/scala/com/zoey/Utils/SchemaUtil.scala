@@ -100,5 +100,14 @@ object SchemaUtil {
     new Schema(columns)
   }
 
+  lazy val ProvinceSchema: Schema = {
+    val columns = List(
+      new ColumnSchemaBuilder("provincename", Type.STRING).nullable(false).key(true).build(),
+      new ColumnSchemaBuilder("cityname", Type.STRING).nullable(false).build(),
+      new ColumnSchemaBuilder("cnt", Type.INT64).nullable(false).build()
+    ).asJava
+    new Schema(columns)
+  }
+
 
 }

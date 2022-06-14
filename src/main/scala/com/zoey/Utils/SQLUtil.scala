@@ -35,4 +35,16 @@ object SQLUtil {
     "from logs left join " +
     "ips on logs.ip_long between ips.start_ip and ips.end_ip "
 
+  lazy val PROVINCE_STAT_SQL = "select provincename, cityname," +
+    " count(1) as cnt " +
+    "from ods " +
+    "group by 1, 2"
+
+  lazy val TEST_SQL =
+    """
+      |select provincename, cityname, count(1) as cnt
+      |from ods
+      |group by 1, 2
+      |order by cnt desc
+      |""".stripMargin
 }
