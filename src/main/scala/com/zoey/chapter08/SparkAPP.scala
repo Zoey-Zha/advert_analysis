@@ -1,6 +1,6 @@
 package com.zoey.chapter08
 
-import com.zoey.chapter08.business.{AreaProcessor, LogETLProcessor, ProvinceStatProcessor}
+import com.zoey.chapter08.business.{AppStatProcessor, AreaProcessor, LogETLProcessor, ProvinceStatProcessor}
 import org.apache.spark.sql.SparkSession
 
 object SparkAPP {
@@ -14,7 +14,10 @@ object SparkAPP {
     // get province city stat table
     // ProvinceStatProcessor.handler(spark)
 
-    AreaProcessor.handler(spark)
+    // AreaProcessor.handler(spark)
+
+    // app data stat
+    AppStatProcessor.handler(spark)
 
     spark.stop()
   }
