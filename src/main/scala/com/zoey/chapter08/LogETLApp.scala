@@ -1,15 +1,12 @@
 package com.zoey.chapter08
 
-import com.zoey.Utils.{IPUtils, SQLUtil, SchemaUtil}
+import com.zoey.Utils.{IPUtils, KuduUtil, SQLUtil, SchemaUtil}
 import org.apache.kudu.client.{CreateTableOptions, KuduClient}
 import org.apache.kudu.client.KuduClient.KuduClientBuilder
 import org.apache.spark.rdd.RDD
 import org.apache.spark.sql.expressions.UserDefinedFunction
 import org.apache.spark.sql.functions.udf
 import org.apache.spark.sql.{DataFrame, SparkSession}
-
-import java.util
-import java.util.LinkedList
 
 object LogETLApp {
   def main(args: Array[String]): Unit = {
@@ -71,24 +68,9 @@ object LogETLApp {
     val partitionId = "ip"
     val tableName = "ods"
     val schema = SchemaUtil.ODSSchema
-    val client: KuduClient = new KuduClientBuilder(master).build()
 
-    val options: CreateTableOptions = new CreateTableOptions()
-    options.setNumReplicas(1)
-    // val parcols: util.LinkedList[String] = new util.LinkedList[String]()
-    // 不加util???
-    val parcols: LinkedList[String] = new LinkedList[String]()
-
-    parcols.add(partitionId)
-
-    options.addHashPartitions(parcols,3)
-
-    // 创建表
-    if(client.tableExists(tableName)) {
-      client.deleteTable(tableName)
-    }
-    client.createTable(tableName,schema,options)
-
+    // create table if not exists
+    KuduUtil.kuduSink(master, tableName, schema, partitionId, resDF)
 
     resDF.write.mode(SaveMode.Append) //
       .format("org.apache.kudu.spark.kudu") //

@@ -22,19 +22,19 @@ object KuduApp {
     // createTable(client, tableName)
 
     // 删除表
-    // deleteTable(client, tableName)
+    deleteTable(client, "ods")
 
     // 插入数据
     //  inseartRows(client, tableName)
 
-    queryTable(client, tableName)
-    print("+++++++++++++++++++++++")
-
-    updateTable(client, tableName)
-
-    print("+++++++++++++++++++++++")
-
-    queryTable(client, tableName)
+//    queryTable(client, tableName)
+//    print("+++++++++++++++++++++++")
+//
+//    updateTable(client, tableName)
+//
+//    print("+++++++++++++++++++++++")
+//
+//    queryTable(client, tableName)
 
     client.close()
 
