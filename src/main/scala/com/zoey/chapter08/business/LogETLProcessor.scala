@@ -1,6 +1,6 @@
 package com.zoey.chapter08.business
 
-import com.zoey.Utils.{IPUtils, KuduUtil, SQLUtil, SchemaUtil}
+import com.zoey.Utils.{DateUtils, IPUtils, KuduUtil, SQLUtil, SchemaUtil}
 import com.zoey.chapter08.`trait`.DataProcess
 import org.apache.spark.rdd.RDD
 import org.apache.spark.sql.expressions.UserDefinedFunction
@@ -9,9 +9,15 @@ import org.apache.spark.sql.{DataFrame, SparkSession}
 
 object LogETLProcessor extends DataProcess{
   override def handler(spark: SparkSession): Unit = {
-    val jsonDF: DataFrame = spark.read.json("file:///Users/xinzha/Documents/02 Projects/advert_analysis/data/data-test.json")
+    val rawPath: String = spark.sparkContext.getConf.get("spark.raw.path")
 
-    val ipRuleRDD: RDD[String] = spark.sparkContext.textFile("file:///Users/xinzha/Documents/02 Projects/advert_analysis/data/ip.txt")
+    val jsonDF: DataFrame = spark.read.json(rawPath)
+//    val jsonDF: DataFrame = spark.read.json("file:///Users/xinzha/Documents/02 Projects/advert_analysis/data/data-test.json")
+
+    val ipRulePath: String = spark.sparkContext.getConf.get("spark.ip.path")
+    val ipRuleRDD: RDD[String] = spark.sparkContext.textFile(ipRulePath)
+
+    // val ipRuleRDD: RDD[String] = spark.sparkContext.textFile("file:///Users/xinzha/Documents/02 Projects/advert_analysis/data/ip.txt")
 
     import spark.implicits._
 
@@ -61,7 +67,8 @@ object LogETLProcessor extends DataProcess{
 
     val master = "hadoop000"
     val partitionId = "ip"
-    val tableName = "ods"
+    // val tableName = "ods"
+    val tableName = DateUtils.getTableName("ods", spark)
     val schema = SchemaUtil.ODSSchema
 
     // create table if not exists

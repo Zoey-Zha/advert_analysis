@@ -22,8 +22,11 @@ object KuduApp {
     // createTable(client, tableName)
 
     // 删除表
-    deleteTable(client, "ods")
-    deleteTable(client,"province_city_stat")
+    deleteTable(client, "ods_20220614")
+//    deleteTable(client, "app_stat_20220614")
+//    deleteTable(client, "area_stat_20220614")
+//    deleteTable(client,"province_city_stat_20220614")
+
 
     // 插入数据
     //  inseartRows(client, tableName)
